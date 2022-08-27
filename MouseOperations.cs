@@ -4,10 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace AutoClicker
 {
-
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public static class MouseOperations
+    [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Library")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Library")]
+    internal static class MouseOperations
     {
         [Flags]
         public enum MouseEventFlags
@@ -24,7 +23,7 @@ namespace AutoClicker
 
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetCursorPos(int x, int y);      
+        private static extern bool SetCursorPos(int x, int y);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -33,7 +32,7 @@ namespace AutoClicker
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
-        public static void SetCursorPosition(int x, int y) 
+        public static void SetCursorPosition(int x, int y)
         {
             SetCursorPos(x, y);
         }
@@ -49,9 +48,9 @@ namespace AutoClicker
 
             if (!gotPoint)
             {
-                currentMousePoint = new MousePoint(0, 0);
+                currentMousePoint = new(0, 0);
             }
-            
+
             return currentMousePoint;
         }
 

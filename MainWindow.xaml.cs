@@ -9,12 +9,12 @@ using NHotkey.Wpf;
 namespace AutoClicker
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
         private Timer? _timer;
-        
+
         public MainWindow()
         {
             HotkeyManager.Current.AddOrReplace("Increment", Key.F8, ModifierKeys.None, HotkeyAutoClicker);
@@ -34,11 +34,13 @@ namespace AutoClicker
             {
                 interval = 1;
             }
-            
-            _timer = new Timer((object? state) =>
-            {
-                MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown | MouseOperations.MouseEventFlags.LeftUp);
-            }, null, new TimeSpan(0), new TimeSpan(TimeSpan.TicksPerMillisecond * interval));
+
+            _timer = new(
+                state =>
+                {
+                    MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown |
+                                               MouseOperations.MouseEventFlags.LeftUp);
+                }, null, new(0), new TimeSpan(TimeSpan.TicksPerMillisecond * interval));
         }
 
         private void ToggleButtonAutoClick_UnChecked(object sender, RoutedEventArgs e)

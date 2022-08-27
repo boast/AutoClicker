@@ -32,15 +32,9 @@ namespace AutoClicker
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
-        public static void SetCursorPosition(int x, int y)
-        {
-            SetCursorPos(x, y);
-        }
+        public static void SetCursorPosition(int x, int y) => SetCursorPos(x, y);
 
-        public static void SetCursorPosition(MousePoint point)
-        {
-            SetCursorPos(point.X, point.Y);
-        }
+        public static void SetCursorPosition(MousePoint point) => SetCursorPos(point.X, point.Y);
 
         public static MousePoint GetCursorPosition()
         {

@@ -8,23 +8,19 @@ using NHotkey.Wpf;
 
 namespace AutoClicker
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow
     {
         private Timer? _timer;
 
         public MainWindow()
         {
-            HotkeyManager.Current.AddOrReplace("Increment", Key.F8, ModifierKeys.None, HotkeyAutoClicker);
+            HotkeyManager.Current.AddOrReplace("ToggleAutoClick", Key.F8, ModifierKeys.None, HotkeyAutoClicker);
             InitializeComponent();
         }
 
-        private void HotkeyAutoClicker(object? sender, HotkeyEventArgs e)
-        {
+        private void HotkeyAutoClicker(object? sender, HotkeyEventArgs e) =>
             ToggleButtonAutoClick.IsChecked = ToggleButtonAutoClick.IsChecked != true;
-        }
 
         private void ToggleButtonAutoClick_Checked(object sender, RoutedEventArgs e)
         {
@@ -36,21 +32,16 @@ namespace AutoClicker
             }
 
             _timer = new(
-                state =>
+                _ =>
                 {
                     MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown |
                                                MouseOperations.MouseEventFlags.LeftUp);
-                }, null, new(0), new TimeSpan(TimeSpan.TicksPerMillisecond * interval));
+                }, null, new(0), TimeSpan.FromMilliseconds(interval));
         }
 
-        private void ToggleButtonAutoClick_UnChecked(object sender, RoutedEventArgs e)
-        {
-            _timer?.Dispose();
-        }
+        private void ToggleButtonAutoClick_UnChecked(object sender, RoutedEventArgs e) => _timer?.Dispose();
 
-        private void TextBoxInterval_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
-        }
+        private void TextBoxInterval_OnPreviewTextInput(object sender, TextCompositionEventArgs e) =>
+            e.Handled = Regex.IsMatch(e.Text, @"\d+");
     }
 }

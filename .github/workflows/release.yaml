@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      
+jobs:
+  create_release:
+    name: Create a release and publish the artifacts to github
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3.4.0
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish (single file and self contained)
+        run: dotnet publish -c Release --sc true
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./bin/Release/net6.0-windows/win-x64/publish/AutoClicker.exe
+          

@@ -29,13 +29,9 @@ public partial class MainWindow
             TextBoxInterval.Text = "1";
             interval             = 1;
         }
+        var period = TimeSpan.FromMilliseconds(interval);
 
-        _timer = new(
-            _ =>
-            {
-                MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown |
-                                           MouseOperations.MouseEventFlags.LeftUp);
-            }, null, new(0), TimeSpan.FromMilliseconds(interval));
+        _timer = new(_ => MouseOperations.Event(MouseOperations.EventFlag.Click), null, TimeSpan.Zero, period);
     }
 
     private void ToggleButtonAutoClick_UnChecked(object sender, RoutedEventArgs e) => _timer?.Dispose();

@@ -9,7 +9,7 @@ namespace AutoClicker;
 internal static class MouseOperations
 {
     [Flags]
-    public enum MouseEventFlags
+    public enum EventFlag
     {
         Move = 0x00000001,
         LeftDown = 0x00000002,
@@ -19,13 +19,14 @@ internal static class MouseOperations
         MiddleDown = 0x00000020,
         MiddleUp = 0x00000040,
         Absolute = 0x00008000,
+        Click = LeftDown | LeftUp,
     }
 
     [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool GetCursorPosition(out MousePoint mousePoint);
+    private static extern bool GetCursorPosition(out Point point);
 
-    public static MousePoint GetCursorPosition()
+    public static Point GetCursorPosition()
     {
         if (!GetCursorPosition(out var currentMousePoint))
         {
@@ -36,14 +37,14 @@ internal static class MouseOperations
     }
 
     [DllImport("user32.dll", EntryPoint = "mouse_event")]
-    private static extern void MouseEvent(int dwFlags, int dx, int dy, int dwData = 0, int dwExtraInfo = 0);
+    private static extern void Event(int dwFlags, int dx, int dy, int dwData = 0, int dwExtraInfo = 0);
 
-    public static void MouseEvent(MouseEventFlags value)
+    public static void Event(EventFlag value)
     {
         var position = GetCursorPosition();
-        MouseEvent((int)value, position.X, position.Y);
+        Event((int)value, position.X, position.Y);
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct MousePoint(int X, int Y);
+    public readonly record struct Point(int X, int Y);
 }

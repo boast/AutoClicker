@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="AutoClicker"
-        MinWidth="300"
+        MinWidth="250"
         MinHeight="100"
         SizeToContent="WidthAndHeight"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Medium"
+        TextElement.FontWeight="Light"
         TextElement.FontSize="14"
         FontFamily="{md:MaterialDesignFont}">
 
@@ -25,6 +25,11 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <ToggleButton Name="ToggleButtonAutoClick" Checked="ToggleButtonAutoClick_Checked"
@@ -40,6 +45,10 @@
 
         <Border Grid.Row="0" Grid.Column="3">
             <Label VerticalContentAlignment="Center">ms</Label>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
+            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="11">Press F8 to toggle the AutoClicker</Label>
         </Border>
     </Grid>
 </Window>
